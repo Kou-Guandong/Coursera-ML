@@ -13,10 +13,14 @@ figure; hold on;
 %
 
 
+positiveIndex = find(y==1);
+negativeIndex = find(y==0);
 
 
-
-
+plot( X(positiveIndex, 1), X(positiveIndex, 2), 'g+', 'LineWidth', 2, ...
+    'MarkerSize', 6);
+plot( X(negativeIndex, 1), X(negativeIndex, 2), 'ro', 'MarkerFaceColor', 'r', ...
+    'MarkerSize', 6);
 
 
 
