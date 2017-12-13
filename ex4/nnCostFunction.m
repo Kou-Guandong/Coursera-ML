@@ -87,6 +87,37 @@ regularization = lambda/2/m * ( sum(sum(Theta1(:, 2:end) .^2)) + sum(sum(Theta2(
 J = J + regularization;
 
 
+% part2 BackPropagation
+
+for t=1:m
+
+    % input layer l=1
+    a1 = [1; X(t,:)'];
+
+    % hidden layer l=2
+    z2 = Theta1 * a1;
+    a2 = [1; sigmoid(z2)];
+
+    % hidden layer l=3
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+
+    y_label = ([1:num_labels] == y(t))';
+    % calculate delta values
+    delta_3 = a3 - y_label;
+    delta_2 = (Theta2' * delta_3) .* [1; sigmoidGradient(z2)];
+    delta_2 = delta_2(2:end); % disregard the bias
+
+    % update big delta 
+    Theta1_grad = Theta1_grad + delta_2 * a1';
+    Theta2_grad = Theta2_grad + delta_3 * a2';
+
+end
+
+% regularized gradient for cost function
+
+Theta1_grad = (1/m) * Theta1_grad + (lambda/m) * [zeros(size(Theta1, 1), 1) Theta1(:,2:end)];
+Theta2_grad = (1/m) * Theta2_grad + (lambda/m) * [zeros(size(Theta2, 1), 1) Theta2(:,2:end)];
 
 
 
