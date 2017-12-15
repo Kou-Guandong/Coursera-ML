@@ -38,12 +38,22 @@ error_val = zeros(length(lambda_vec), 1);
 %       end
 %
 %
+min_index = 0;
+error_min = 100;
 
+for i = 1:length(lambda_vec)
+    
+    lambda = lambda_vec(i);
+    theta = trainLinearReg(X, y, lambda);
+    error_train(i) = linearRegCostFunction(X, y, theta, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
 
+    if (error_val(i) < error_min)
+        error_min = error_val(i);
+        min_index = i;
+    end
 
-
-
-
+end
 
 
 
